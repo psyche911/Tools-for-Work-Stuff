@@ -6,7 +6,7 @@ Created on Wed Sep 1, 2021
 """
 
 import pandas as pd
-import regex as re
+import re
 import time
 import datetime
 import os
