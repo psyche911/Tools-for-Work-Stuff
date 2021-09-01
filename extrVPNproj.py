@@ -45,7 +45,7 @@ class extract_vpn:
                                                                  ('PDF', '*.pdf'), ('TEXT', '*.txt')])
 
     def error(self):    # pop up window
-        tkinter.messagebox.showinfo(title="Warning", message="No File Selected")
+        msg.showinfo(title="Warning", message="No File Selected")
         
     def uptime(self):   # update time
         TimeLabel["text"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S:') + "%d" % (datetime.datetime.now().microsecond // 100000)
