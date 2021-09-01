@@ -69,29 +69,29 @@ class extract_vpn:
         
     def processFile(self):
         data = pd.ExcelFile(self.file_name)
-        Galvins = pd.read_excel(data, 'Galvins', header=1)
-        Wurth = pd.read_excel(data, 'Wurth', header=1)
+        df1 = pd.read_excel(data, 'Sheet1', header=1)
+        df2 = pd.read_excel(data, 'Sheet2', header=1)
 
-        if(len(Galvins) == 0 and len(Wurth) == 0):      
+        if(len(df1) == 0 and len(df2) == 0):      
             msg.showinfo('No Rows Selected', 'Excel has no rows')
         else:
-            # Data wrangling
-            Galvins['SHORT TEXT'] = Galvins['SHORT TEXT'].str.replace(" ","")
-            Wurth['SHORT TEXT'] = Wurth['SHORT TEXT'].str.replace(" ","")
+            # Remove space in string
+            df1['SHORT TEXT'] = df1['SHORT TEXT'].str.replace(" ","")
+            df2['SHORT TEXT'] = df2['SHORT TEXT'].str.replace(" ","")
             
-            Wurth['SHORT TEXT'] = Wurth['SHORT TEXT'].fillna("FreeText")
-            Galvins['SHORT TEXT'] = Galvins['SHORT TEXT'].fillna("FreeText")
+            df1['SHORT TEXT'] = df1['SHORT TEXT'].fillna("FreeText")
+            df2['SHORT TEXT'] = df2['SHORT TEXT'].fillna("FreeText")
             
             # Perform extraction
-            Wurth['extrVPN'] = Wurth['SHORT TEXT'].apply(lst_to_str)
-            Galvins['extrVPN'] = Galvins['SHORT TEXT'].apply(lst_to_str)
+            df1['extrVPN'] = df1['SHORT TEXT'].apply(lst_to_str)
+            df2['extrVPN'] = df2['SHORT TEXT'].apply(lst_to_str)
 
             # Create a Pandas Excel writer using XlsxWriter as the engine
             writer = pd.ExcelWriter('Wurth & Galvins Plumbing_extr.xlsx', engine='xlsxwriter')
 
             # Write each DataFrame to a specific sheet
-            Galvins.to_excel(writer, sheet_name='Galvins', index = False)
-            Wurth.to_excel(writer, sheet_name='Wurth', index = False)
+            df1.to_excel(writer, sheet_name='Sheet1', index = False)
+            df2.to_excel(writer, sheet_name='Sheet2', index = False)
 
             # Close the Pandas Excel writer and output the Excel file
             writer.save()
